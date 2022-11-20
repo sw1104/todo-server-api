@@ -25,8 +25,8 @@ export class UserService {
     });
     if (user) throw new BadRequestException('이미 가입된 유저입니다.');
     if (
-      signUpDto.gender === '남자' ||
-      signUpDto.gender === '여자' ||
+      signUpDto.gender === '남성' ||
+      signUpDto.gender === '여성' ||
       signUpDto.gender === '기타'
     ) {
       signUpDto.password = await bcrypt.hash(signUpDto.password, 12);
@@ -47,9 +47,10 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: { email: signInDto.email },
     });
+    if (!user) throw new BadRequestException('유저가 없습니다.');
+
     const payload: Payload = { userId: user.id, email: user.email };
     const accessToken = await this.jwtService.sign(payload);
-
     if (user && (await bcrypt.compare(signInDto.password, user.password))) {
       return accessToken;
     } else {

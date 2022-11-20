@@ -29,12 +29,10 @@ export class TodoController {
     @GetUserId() userId: number,
     @Body() createTodoDto: CreateTodoDto,
   ) {
-    const data = await this.todoService.create(userId, createTodoDto);
-    const authorName = data.user.name;
-    const authorNum = data.user.id;
+    await this.todoService.create(userId, createTodoDto);
     return {
       status: HttpStatus.OK,
-      message: authorNum + '번 유저 ' + authorName + '님 TODO등록 성공',
+      message: 'todo 등록 성공',
     };
   }
 
