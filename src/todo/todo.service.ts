@@ -25,7 +25,13 @@ export class TodoService {
       user,
       content: createTodoDto.content,
     });
-    return await this.todoRepository.save(data);
+    const result = await this.todoRepository.save(data);
+    return {
+      todoId: result.id,
+      content: result.content,
+      check: result.isCheck,
+      createDate: result.createAt,
+    };
   }
 
   public async check(userId: number, id: number) {
@@ -53,8 +59,6 @@ export class TodoService {
     const userTodoData = await this.userService.getList(userId);
 
     return {
-      userId: userTodoData.id,
-      userName: userTodoData.name,
       todoList: userTodoData.todo,
     };
   }
@@ -70,7 +74,10 @@ export class TodoService {
     if (todoData.isCheck === true)
       throw new BadRequestException('체크된 항목은 수정이 불가능 합니다.');
 
-    return await this.todoRepository.update(id, { content: updateDto.content });
+    const data = await this.todoRepository.update(id, {
+      content: updateDto.content,
+    });
+    console.log(data);
   }
 
   public async deleteTodo(id: number, userId: number) {

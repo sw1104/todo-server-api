@@ -11,7 +11,13 @@ import {
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { UserService } from './user.service';
-import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiTags,
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiBody,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUserId } from './decorator/get-user-id.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -23,6 +29,23 @@ export class UserController {
 
   @Post('/signup')
   @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        email: { type: 'string' },
+        password: { type: 'string' },
+        gender: { type: 'string' },
+        birth: { type: 'string' },
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @ApiOperation({
     summary: '회원 가입',
     description:

@@ -29,10 +29,11 @@ export class TodoController {
     @GetUserId() userId: number,
     @Body() createTodoDto: CreateTodoDto,
   ) {
-    await this.todoService.create(userId, createTodoDto);
+    const data = await this.todoService.create(userId, createTodoDto);
     return {
-      status: HttpStatus.OK,
+      status: HttpStatus.CREATED,
       message: 'todo 등록 성공',
+      data,
     };
   }
 
@@ -72,8 +73,9 @@ export class TodoController {
     @GetUserId() userId: number,
     @Body() updateDto: UpdateDto,
   ) {
-    await this.todoService.editTodo(id, userId, updateDto);
-    return { status: HttpStatus.OK, message: '수정 완료' };
+    const data = await this.todoService.editTodo(id, userId, updateDto);
+    // 수정기능에 수정된 데이터를 리스폰스 한다.
+    return { status: HttpStatus.OK, data };
   }
 
   @Delete('/:id')
