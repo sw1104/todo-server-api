@@ -70,7 +70,8 @@ todo 항목을 수정한다. 수정은 체크가 되어있지 않은 상태에�
 
 <img width="1024" alt="2022-11-21-todo7" src="https://user-images.githubusercontent.com/105622759/203678113-af0069d9-03cc-49d6-9b82-02f9726cc0f8.png">
 
+## todo 삭제
+todo 항목을 삭제한다.
+<img width="414" alt="2022-11-21-todo11" src="https://user-images.githubusercontent.com/105622759/204142430-ba536211-1af8-499f-8d95-06dc4331dd34.png">
 
-## 현재 작업 중인 사항
-todo delete
 
